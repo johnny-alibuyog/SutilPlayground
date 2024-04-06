@@ -14,15 +14,18 @@ module Storage =
             todos.Add todo
             Ok()
         else
-            Error "Invalid todo"
+            Error $"Invalid todo: {todo.Description}"
 
     do
         addTodo (Todo.create "Create new SAFE project") |> ignore
         addTodo (Todo.create "Write your app") |> ignore
         addTodo (Todo.create "Ship it!!!") |> ignore
 
-let todosApi = {
-    getTodos = fun () -> async { return Storage.todos |> List.ofSeq }
+let todosApi: ITodosApi = {
+    getTodos =
+        fun () -> async {
+            return Storage.todos |> List.ofSeq
+        }
     addTodo =
         fun todo -> async {
             return
