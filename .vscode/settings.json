@@ -3,7 +3,10 @@
         "fsharp": "html"
     },
     "tailwindCSS.experimental.classRegex": [
-        "\\.className\\s+\"([^\"]*)\"",
+        "Attr\\.className\\s+\"([^\"]*)\"",
+        "Html\\.divc\\s+\"([^\"]*)\"",
+        "class'\\s+\"([^\"]*)\"",
+       "\\.className\\s+\"([^\"]*)\"",
         ["\\.className\\s+\\[([^\\]]*)\\]", "\"([^\"]*)\""]
     ]
 }

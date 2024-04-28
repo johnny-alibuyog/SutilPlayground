@@ -17,7 +17,6 @@
     <Compile Include="Features\Users\ProfilePage.fs" />
     <Compile Include="Features\Users\Layout.fs" />
     <Compile Include="Features\Security\LoginPage.fs" />
-    <Compile Include="Features\Sandbox\Test.fs" />
     <Compile Include="Route.fs" />
     <Compile Include="Index.fs" />
     <Compile Include="App.fs" />

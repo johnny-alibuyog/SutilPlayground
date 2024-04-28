@@ -1,8 +1,11 @@
-module App
+namespace AlphaConnect.Client
 
-open Sutil
-open Fable.Core.JsInterop
+module App =
 
-importSideEffects "./index.css"
 
-Index.view () |> Program.mount
+    open Sutil
+    open Fable.Core.JsInterop
+
+    importSideEffects "./index.css"
+
+    Index.render () |> Program.mount

@@ -2,3 +2,5 @@ Fable.Core
 Fable.Remoting.Client
 FSharp.Core
 Sutil
+Sutil.Router
+Zanaptak.TypedCssClasses

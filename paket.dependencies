@@ -15,3 +15,5 @@ nuget Fake.Core.Target ~> 5
 nuget Fake.IO.FileSystem ~> 5
 nuget Farmer ~> 1
 nuget Sutil
+nuget Sutil.Router
+nuget Zanaptak.TypedCssClasses

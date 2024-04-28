@@ -1,104 +1,107 @@
-module Index
+namespace AlphaConnect.Client
 
-open Fable.Remoting.Client
-open Sutil
-open Shared
+module Index =
 
-type Model = { Todos: Todo list; Input: string }
+    open Browser
+    open Components.Button
+    open AlphaConnect.Client.Features.Dashboard
+    open AlphaConnect.Client.Features.Home
+    open AlphaConnect.Client.Features.Security
+    open AlphaConnect.Client.Features.Users
+    open Sutil
+    open Sutil.CoreElements
+    open Sutil.Router
 
-type Msg =
-    | GotTodos of Todo list
-    | SetInput of string
-    | AddTodo
-    | AddedTodo of Todo
+    type Model = { CurrentPage: Route.Page }
 
-let todosApi =
-    Remoting.createApi ()
-    |> Remoting.withRouteBuilder Route.builder
-    |> Remoting.buildProxy<ITodosApi>
+    type Message =
+        | Navigate of string
+        | SetPage of Route.Page
 
-let init () =
-    let model = { Todos = []; Input = "" }
-    let cmd = Cmd.OfAsync.perform todosApi.getTodos () GotTodos
-    model, cmd
+    let init () =
+        let currentPage =
+            window.location
+            |> Router.getCurrentUrl
+            |> Route.ofUrl
 
-let update msg model =
-    match msg with
-    | GotTodos todos -> { model with Todos = todos }, Cmd.none
+        { CurrentPage = currentPage }, Cmd.none
 
-    | SetInput value -> { model with Input = value }, Cmd.none
+    let update (message: Message) (model: Model) : Model * Cmd<Message> =
+        match message with
+        | Navigate path ->
+            model, Router.navigate $"/#{path}"
 
-    | AddTodo ->
-        let todo = Todo.create model.Input
-        let cmd = Cmd.OfAsync.perform todosApi.addTodo todo AddedTodo
+        | SetPage page ->
+            { model with CurrentPage = page }, Cmd.none
 
-        { model with Input = "" }, cmd
+    let render () =
+        let model, dispatch =
+            () |> Store.makeElmish init update ignore
 
-    | AddedTodo todo ->
-        {
-            model with
-                Todos = model.Todos @ [ todo ]
-        },
-        Cmd.none
+        let routerSubscription =
+            Navigable.listenLocation (Router.getCurrentUrl, Route.ofUrl >> SetPage >> dispatch)
 
-let private todoAction model dispatch =
-    Html.div [
-        Attr.className "flex flex-col sm:flex-row mt-4 gap-4"
-        Html.input [
-            Attr.className
-                "shadow appearance-none border rounded w-full py-2 px-3 outline-none focus:ring-2 ring-teal-300 text-grey-darker"
-            Attr.value model.Input
-            Attr.placeholder "What needs to be done?"
-            Attr.autoFocus true
-            Ev.onChange (SetInput >> dispatch)
-            Ev.onKeyPress (fun ev ->
-                if ev.key = "Enter" then
-                    dispatch AddTodo)
-        ]
-        Html.button [
-            Attr.className
-                "flex-no-shrink p-2 px-12 rounded bg-teal-600 outline-none focus:ring-2 ring-teal-300 font-bold text-white hover:bg-teal disabled:opacity-30 disabled:cursor-not-allowed"
-            Attr.disabled (Todo.isValid model.Input |> not)
-            Ev.onClick (fun _ -> dispatch AddTodo)
-            Attr.text "Add"
-        ]
-    ]
-
-let private todoList model dispatch =
-    Html.div [
-        Attr.className "bg-white/80 rounded-md shadow-md p-4 w-5/6 lg:w-3/4 lg:max-w-2xl"
-        Html.ol [
-            Attr.className "list-decimal ml-6"
-            for todo in model.Todos do
-                Html.li [ Attr.className "my-1"; Attr.text todo.Description ]
-        ]
-
-        todoAction model dispatch
-    ]
-
-let view () =
-    let model, dispatch = () |> Store.makeElmish init update ignore
-
-    Html.section [
-        Attr.className "h-screen w-screen"
-        Attr.style [
-            Css.backgroundSize "cover"
-            Css.backgroundImageUrl "https://unsplash.it/1200/900?random"
-            Css.backgroundPosition "no-repeat center center fixed"
-        ]
-
-        Html.a [
-            Attr.href "https://safe-stack.github.io/"
-            Attr.className "absolute block ml-12 h-12 w-12 bg-teal-300 hover:cursor-pointer hover:bg-teal-400"
-            Html.img [ Attr.src "/favicon.png"; Attr.alt "Logo" ]
-        ]
+        let navigate path =
+            dispatch (Navigate path)
 
         Html.div [
-            Attr.className "flex flex-col items-center justify-center h-full"
-            Html.h1 [
-                Attr.className "text-center text-5xl font-bold text-white mb-3 rounded-md p-4"
-                Attr.text "Alpha Connect"
+            disposeOnUnmount [ model ]
+            unsubscribeOnUnmount [ routerSubscription ]
+
+            Html.div [
+                Attr.classes [ "flex"; "min-h-screen"; "w-full"; "flex-col"; "bg-muted/40"; ]
+                Html.aside [
+                    Attr.classes [ "fixed"; "inset-y-0"; "left-0"; "z-10"; "hidden"; "w-14"; "flex-col"; "border-r"; "bg-background"; "sm:flex" ]
+                    Html.nav [
+                        Attr.classes [ "flex"; "flex-col"; "items-center"; "gap-4"; "px-2"; "sm:py-5" ]
+                        button.render [
+                            button.variant.link
+                            button.size.icon
+                            button.text "Home"
+                            button.onClick (fun _ -> navigate "/")
+                        ]
+                        button.render [
+                            button.variant.link
+                            button.size.icon
+                            button.text "Login"
+                            button.onClick (fun _ -> navigate "/login")
+                        ]
+                        button.render [
+                            button.variant.destructive
+                            button.size.small
+                            button.text "User"
+                            button.onClick (fun _ ->
+                                ListPage({ page = 1; size = 10 })
+                                |> UserRoute.asUrl
+                                |> navigate
+                            )
+                        ]
+                    ]
+                ]
+                Html.div [
+                    Attr.classes [ "flex"; "flex-col"; "sm:gap-4"; "sm:py-4"; "sm:pl-14" ]
+                    Html.header [
+                        Attr.classes [ "sticky"; "top-0"; "z-30"; "flex"; "h-14"; "items-center"; "gap-4"; "border-b"; "bg-background"; "px-4"; "sm:static"; "sm:h-auto"; "sm:border-0"; "sm:bg-transparent"; "sm:px-6" ]
+                        // Html.h1 [
+                        //     Attr.classes [ "text-2xl"; "font-bold"; "text-primary" ]
+                        //     Html.text "Elmish Fable"
+                        // ]
+
+                        Bind.el (model .> _.CurrentPage, fun page ->
+                            match page with
+                            | Route.HomePage ->
+                                HomePage.render ()
+
+                            | Route.LoginPage ->
+                                LoginPage.render ()
+
+                            | Route.UserPage page ->
+                                UserLayout.render navigate page
+
+                            | Route.NotFound ->
+                                Html.h1 "Not found!"
+                        )
+                    ]
+                ]
             ]
-            todoList (model |> Store.current) dispatch
         ]
-    ]
