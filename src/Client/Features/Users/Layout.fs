@@ -1,43 +1,12 @@
 namespace AlphaConnect.Client.Features.Users
 
-[<AutoOpen>]
-module Route =
-    open Sutil.Router
-
-    type UserRoute =
-        | ProfilePage of ProfilePage.Params
-        | ListPage of ListPage.Params
-
-    module UserRoute =
-        let ofUrl segments =
-            match segments with
-            | [ "users"; Route.Int userId ] -> ProfilePage({ userId = userId })
-
-            | [ "users"; Route.Query [ "page", Route.Int page; "size", Route.Int size ] ] ->
-                ListPage({ page = page; size = size })
-
-            | _ -> ListPage({ page = 1; size = 10 })
-
-        let asUrl route =
-            match route with
-            | ProfilePage({ userId = userId }) -> $"/users/{userId}"
-
-            | ListPage({ page = page; size = size }) -> $"/users?page={page}&size={size}"
-
-        let navigate navigate route = route |> asUrl |> navigate
-
-    let (|UserRoute|_|) segments =
-        match segments with
-        | "users" :: _ -> Some(UserRoute.ofUrl segments)
-        | _ -> None
-
-module UserLayout =
+module Layout =
     open Sutil
     open AlphaConnect.Client.Components.Button
 
-    let render navigator (route: UserRoute) =
+    let render navigator (route: Route) =
 
-        let navigate = UserRoute.navigate navigator
+        let navigate = Route.navigate navigator
 
         Html.div [
             button.render [

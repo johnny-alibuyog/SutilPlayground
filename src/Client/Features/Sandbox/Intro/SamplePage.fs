@@ -1,0 +1,60 @@
+namespace AlphaConnect.Client.Features.Sandbox.Intro
+
+module SamplePage =
+
+    open Sutil
+    open Sutil.CoreElements
+    open AlphaConnect.Client.Components.Button
+
+    [<AutoOpen>]
+    module Types =
+
+        type Model = { counter: int }
+
+        module Model =
+            let init () = { counter = 0 }
+
+        type Message =
+            | Increment
+            | Decrement
+
+    let update (message: Message) (model: Model) =
+
+        match message with
+        | Increment -> {
+            model with
+                counter = model.counter + 1
+          }
+        | Decrement -> {
+            model with
+                counter = model.counter - 1
+          }
+
+    let view () =
+
+        let model, dispatch = () |> Store.makeElmishSimple Model.init update ignore
+
+        Html.div [
+            disposeOnUnmount [ model ]
+
+            style [ Css.fontFamily "Arial, Helvetica, sans-serif"; Css.margin 20 ]
+
+            Html.h1 [
+                Attr.classes [ "text-2xl"; "font-bold"; "text-primary" ]
+                Html.text "Sample Page"
+            ]
+
+            Bind.el (model |> Store.map _.counter, (fun counter -> Html.text $"Counter: {counter}"))
+
+            Html.div [
+                button.default' [
+                    button.text "+"
+                    button.onClick (fun _ -> dispatch Increment)
+                ]
+
+                button.default' [
+                    button.text "-"
+                    button.onClick (fun _ -> dispatch Decrement)
+                ]
+            ]
+        ]

@@ -1,38 +1,20 @@
-module AlphaConnect.Client.Route
+module AlphaConnect.Client
 
-open AlphaConnect.Client.Features.Users
-open AlphaConnect.Client.Features.Security
+open AlphaConnect.Client.Features
 
-type Page =
+type Route =
     | HomePage
     | LoginPage
-    | UserPage of UserRoute
+    | UserRoute of Users.Route
+    | SandboxRoute of Sandbox.Route
     | NotFound
 
-let ofUrl (segments: string list) =
-    match segments with
-    | [] ->
-        HomePage
+module Route =
 
-    | UserRoute params'  ->
-        UserPage params'
-
-    | [ "login" ] ->
-        LoginPage
-
-    | _ ->
-        NotFound
-
-// let navigate dispatch (page: Page) =
-//     match page with
-//     | Home ->
-//         "/"
-
-//     | Login ->
-//         "/login"
-
-//     | User page ->
-//         Users.Route.navigate page
-
-//     | NotFound ->
-//         "/not-found"
+    let ofUrl (segments: string list) =
+        match segments with
+        | [] -> HomePage
+        | Users.Route.IsUser route -> UserRoute route
+        | Sandbox.Route.IsSandbox route -> SandboxRoute route
+        | [ "login" ] -> LoginPage
+        | _ -> NotFound

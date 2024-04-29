@@ -1,63 +1,30 @@
-module Features.Users.Route
+namespace AlphaConnect.Client.Features.Users
 
 open Sutil.Router
-open Features.Users
 
-(*
-    module Route =
-        type UserRoute =
-            | Home
-            | Login
-            | User of Users.Route.Page
-            | NotFound
+type Route =
+    | ProfilePage of ProfilePage.Params
+    | ListPage of ListPage.Params
 
-        module UserRoute =
-            let ofUrl (segments: string list) =
-                match segments with
-                | [] ->
-                    Home
+module Route =
+    let ofUrl segments =
+        match segments with
+        | [ "users"; Route.Int userId ] -> ProfilePage({ userId = userId })
 
-                | Users.Route.Page page  ->
-                    User page
+        | [ "users"; Route.Query [ "page", Route.Int page; "size", Route.Int size ] ] ->
+            ListPage({ page = page; size = size })
 
-                | [ "login" ] ->
-                    Login
+        | _ -> ListPage({ page = 1; size = 10 })
 
-                | _ ->
-                    NotFound
+    let asUrl route =
+        match route with
+        | ProfilePage({ userId = userId }) -> $"/users/{userId}"
 
-            let navigate navigator (page: UserRoute) =
-                match page with
-                | Home ->
-                    navigator "/#/"
+        | ListPage({ page = page; size = size }) -> $"/users?page={page}&size={size}"
 
-                | Login ->
-                    navigator "/#/login"
+    let navigate navigate route = route |> asUrl |> navigate
 
-                | User page ->
-                    Users.Route.navigate navigator page
-
-                | NotFound ->
-                    navigator "/not-found"
-*)
-
-
-// type Page =
-//     | Profile of ProfilePage.Params
-//     | List of ListPage.Params
-
-// let ofUrl segments =
-//     match segments with
-//     | [ "users"; Route.Int userId ] ->
-//         Profile(ProfilePage.Params userId)
-
-//     | [ "users"; Route.Query [ "page", Route.Int page; "size", Route.Int size ] ] ->
-//         List(ListPage.Params(page, size))
-
-//     | _ ->
-//         List(ListPage.Params(1, 10))
-
-// let (|Page|_|) segments =
-//     match segments with
-//     | "users" :: _ -> Some(ofUrl segments)
-//     | _ -> None
+    let (|IsUser|_|) segments =
+        match segments with
+        | "users" :: _ -> Some(ofUrl segments)
+        | _ -> None
