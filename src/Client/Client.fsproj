@@ -20,8 +20,13 @@
     <Compile Include="Features\Security\LoginPage.fs" />
     <Compile Include="Features\Sandbox\Intro\DynamicAttributePage.fs" />
     <Compile Include="Features\Sandbox\Intro\SamplePage.fs" />
+    <Compile Include="Features\Sandbox\Intro\StylingPage.fs" />
     <Compile Include="Features\Sandbox\Intro\Route.fs" />
     <Compile Include="Features\Sandbox\Intro\Layout.fs" />
+    <Compile Include="Features\Sandbox\LocalRoute\Page1.fs" />
+    <Compile Include="Features\Sandbox\LocalRoute\Page2.fs" />
+    <Compile Include="Features\Sandbox\LocalRoute\Route.fs" />
+    <Compile Include="Features\Sandbox\LocalRoute\Layout.fs" />
     <Compile Include="Features\Sandbox\Reactivity\ReactiveAssignmentPage.fs" />
     <Compile Include="Features\Sandbox\Reactivity\Route.fs" />
     <Compile Include="Features\Sandbox\Reactivity\Layout.fs" />

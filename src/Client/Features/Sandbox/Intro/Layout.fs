@@ -4,7 +4,7 @@ module Layout =
     open Sutil
     open AlphaConnect.Client.Components.Button
 
-    let render navigator (route: Route) =
+    let view navigator (route: Route) =
 
         let navigate = Route.navigate navigator
 
@@ -23,7 +23,15 @@ module Layout =
                 button.onClick (fun _ -> navigate DynamicAttributePage)
             ]
 
+            button.render [
+                button.variant.ghost
+                button.size.default'
+                button.text "Styling"
+                button.onClick (fun _ -> navigate StylingPage)
+            ]
+
             match route with
             | DynamicAttributePage -> DynamicAttributePage.view ()
+            | StylingPage -> StylingPage.view ()
             | SamplePage -> SamplePage.view ()
         ]

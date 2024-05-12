@@ -3,8 +3,8 @@ namespace AlphaConnect.Client.Features.Users
 open Sutil.Router
 
 type Route =
-    | ProfilePage of ProfilePage.Params
-    | ListPage of ListPage.Params
+    | ProfilePage of ProfilePage.Parameters
+    | ListPage of ListPage.Parameters
 
 module Route =
     let ofUrl segments =

@@ -4,7 +4,7 @@ module Layout =
     open Sutil
     open AlphaConnect.Client.Components.Button
 
-    let render navigator (route: Route) =
+    let view navigator (route: Route) =
 
         let navigate = Route.navigate navigator
 
@@ -30,6 +30,6 @@ module Layout =
             ]
 
             match route with
-            | ListPage params' -> ListPage.render params'
-            | ProfilePage params' -> ProfilePage.render params'
+            | ListPage params' -> ListPage.view params'
+            | ProfilePage params' -> ProfilePage.view params'
         ]

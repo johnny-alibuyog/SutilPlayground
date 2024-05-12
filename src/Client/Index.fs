@@ -9,23 +9,25 @@ module Index =
     open Sutil.CoreElements
     open Sutil.Router
 
-    type Model = { CurrentPage: Route }
+    [<AutoOpen>]
+    module Types =
+        type Model = { CurrentPage: Route }
 
-    type Message =
-        | Navigate of string
-        | SetPage of Route
+        type Message =
+            | Navigate of string
+            | SetPage of Route
 
-    let init () =
-        let currentPage = window.location |> Router.getCurrentUrl |> Route.ofUrl
+        let init () =
+            let currentPage = window.location |> Router.getCurrentUrl |> Route.ofUrl
 
-        { CurrentPage = currentPage }, Cmd.none
+            { CurrentPage = currentPage }, Cmd.none
 
     let update (message: Message) (model: Model) : Model * Cmd<Message> =
         match message with
         | Navigate path -> model, Router.navigate $"/#{path}"
         | SetPage page -> { model with CurrentPage = page }, Cmd.none
 
-    let render () =
+    let view () =
         let model, dispatch = () |> Store.makeElmish init update ignore
 
         let navigationSubscription =
@@ -114,8 +116,8 @@ module Index =
                                 match page with
                                 | Route.HomePage -> Home.HomePage.render ()
                                 | Route.LoginPage -> Security.LoginPage.render ()
-                                | Route.UserRoute route -> Users.Layout.render navigate route
-                                | Route.SandboxRoute route -> Sandbox.Layout.render navigate route
+                                | Route.UserRoute route -> Users.Layout.view navigate route
+                                | Route.SandboxRoute route -> Sandbox.Layout.view navigate route
                                 | Route.NotFound -> Html.h1 "Not found!"
                         )
                     ]

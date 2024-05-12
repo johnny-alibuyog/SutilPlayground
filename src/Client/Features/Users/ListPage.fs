@@ -4,19 +4,20 @@ module ListPage =
 
     open Sutil
 
-    type Params = {
+    type Parameters = {
         page: int
         size: int
     }
 
-    let render (params': Params) =
+    let view ({ page = page; size = size }: Parameters) =
+
         Html.div [
             Html.h1 [
                 Attr.classes [ "text-2xl"; "font-bold"; "text-primary" ]
                 Html.text "Users"
             ]
             Html.p [
-                Html.text $"Page: {params'.page}, Size: {params'.size}"
+                Html.text $"Page: {page}, Size: {size}"
             ]
         ]
 

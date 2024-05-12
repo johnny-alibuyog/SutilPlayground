@@ -4,7 +4,7 @@ module Layout =
     open Sutil
     open AlphaConnect.Client.Components.Button
 
-    let render navigator (route: Route) =
+    let view navigator (route: Route) =
 
         let navigate = Route.navigate navigator
 
@@ -25,11 +25,19 @@ module Layout =
             button.render [
                 button.variant.ghost
                 button.size.default'
+                button.text "Local Route"
+                button.onClick (fun _ -> navigate (LocalRoute LocalRoute.Page1))
+            ]
+
+            button.render [
+                button.variant.ghost
+                button.size.default'
                 button.text "Reactivity"
                 button.onClick (fun _ -> navigate (ReactivityRoute Reactivity.ReactiveAssignmentPage))
             ]
 
             match route with
-            | IntroRoute page -> Intro.Layout.render navigator page
-            | ReactivityRoute page -> Reactivity.Layout.render navigator page
+            | IntroRoute route' -> Intro.Layout.view navigator route'
+            | LocalRoute _ -> LocalRoute.Layout.view // TODO: this local route this POC is not yet working
+            | ReactivityRoute route' -> Reactivity.Layout.view navigator route'
         ]

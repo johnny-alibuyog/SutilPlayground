@@ -4,7 +4,7 @@ module Layout =
     open Sutil
     open AlphaConnect.Client.Components.Button
 
-    let render navigator (route: Route) =
+    let view navigator (route: Route) =
 
         let navigate = Route.navigate navigator
 

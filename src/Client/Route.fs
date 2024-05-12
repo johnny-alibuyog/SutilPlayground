@@ -1,4 +1,4 @@
-module AlphaConnect.Client
+namespace AlphaConnect.Client
 
 open AlphaConnect.Client.Features
 
