@@ -1,23 +1,32 @@
 namespace AlphaConnect.Client.Features.Sandbox.Intro
 
 type Route =
+    | HelloWorldPage
+    | SamplePage
     | DynamicAttributePage
     | StylingPage
-    | SamplePage
+    | NestedComponentPage
+    | HtmlTagsPage
 
 module Route =
     let ofUrl segments =
         match segments with
+        | [ "sandbox"; "intro"; "hello-world" ] -> HelloWorldPage
+        | [ "sandbox"; "intro"; "sample" ] -> SamplePage
         | [ "sandbox"; "intro"; "dynamic-attribute" ] -> DynamicAttributePage
         | [ "sandbox"; "intro"; "styling" ] -> StylingPage
-        | [ "sandbox"; "intro"; "sample" ] -> SamplePage
+        | [ "sandbox"; "intro"; "nested-component" ] -> NestedComponentPage
+        | [ "sandbox"; "intro"; "html-tags" ] -> HtmlTagsPage
         | _ -> SamplePage
 
     let asUrl route =
         match route with
+        | HelloWorldPage -> "/sandbox/intro/hello-world"
+        | SamplePage -> "/sandbox/intro/sample"
         | DynamicAttributePage -> "/sandbox/intro/dynamic-attribute"
         | StylingPage -> "/sandbox/intro/styling"
-        | SamplePage -> "/sandbox/intro/sample"
+        | NestedComponentPage -> "/sandbox/intro/nested-component"
+        | HtmlTagsPage -> "/sandbox/intro/html-tags"
 
     let navigate navigate route = route |> asUrl |> navigate
 

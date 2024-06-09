@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Reactivity
+namespace AlphaConnect.Client.Features.Sandbox.Logic
 
 module Layout =
     open Sutil
@@ -12,32 +12,32 @@ module Layout =
 
             Html.h1 [
                 Attr.classes [ "text-4xl"; "font-bold"; "text-primary" ]
-                Html.text "Reactivity"
+                Html.text "Logic"
             ]
 
             button.render [
                 button.variant.ghost
                 button.size.default'
-                button.text "Reactive Assignments"
-                button.onClick (fun _ -> navigate ReactiveAssignmentPage)
+                button.text "If Block"
+                button.onClick (fun _ -> navigate IfBlockPage)
             ]
 
             button.render [
                 button.variant.ghost
                 button.size.default'
-                button.text "Reactive Declarations"
-                button.onClick (fun _ -> navigate ReactiveDeclarationPage)
+                button.text "Else Block"
+                button.onClick (fun _ -> navigate ElseBlockPage)
             ]
 
             button.render [
                 button.variant.ghost
                 button.size.default'
-                button.text "Reactive Statements"
-                button.onClick (fun _ -> navigate ReactiveStatementPage)
+                button.text "Else If Block"
+                button.onClick (fun _ -> navigate ElseIfBlockPage)
             ]
 
             match route with
-            | ReactiveAssignmentPage -> ReactiveAssignmentPage.view ()
-            | ReactiveDeclarationPage -> ReactiveDeclarationPage.view ()
-            | ReactiveStatementPage -> ReactiveStatementPage.view ()
+            | IfBlockPage -> IfBlockPage.view ()
+            | ElseBlockPage -> ElseBlockPage.view ()
+            | ElseIfBlockPage -> ElseIfBlockPage.view ()
         ]
