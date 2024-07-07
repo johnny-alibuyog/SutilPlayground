@@ -42,7 +42,7 @@ module TransitionPage =
                     )
                 ]
                 Html.p [ Html.text "Flies in and out" ]
-                    |> transition [ InOut (fly |> withProps [ Duration 2000.0; Y 200.0 ]) ] hasFlown
+                |> transition [ InOut(fly |> withProps [ Duration 2000.0; Y 200.0 ]) ] hasFlown
             ]
 
             Html.div [
@@ -61,7 +61,7 @@ module TransitionPage =
                 let fadeOut = fade |> withProps [ Duration 2000.0 ]
 
                 Html.p [ Html.text "Shows and hides" ]
-                    |> transition [ In flyIn; Out fadeOut ] hasShown
+                |> transition [ In flyIn; Out fadeOut ] hasShown
             ]
 
         ]

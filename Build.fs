@@ -27,8 +27,7 @@ Target.create "Bundle" (fun _ ->
         "server", dotnet [ "publish"; "-c"; "Release"; "-o"; deployPath ] serverPath
         "client", dotnet [ "fable"; "-o"; "output"; "-s"; "--run"; "npx"; "vite"; "build" ] clientPath
     ]
-    |> runParallel
-)
+    |> runParallel)
 
 Target.create "Azure" (fun _ ->
     let web = webApp {
@@ -52,8 +51,7 @@ Target.create "Run" (fun _ ->
         "server", dotnet [ "watch"; "run" ] serverPath
         "client", dotnet [ "fable"; "watch"; "-o"; "output"; "-s"; "--run"; "npx"; "vite" ] clientPath
     ]
-    |> runParallel
-)
+    |> runParallel)
 
 Target.create "RunTests" (fun _ ->
     run dotnet [ "build" ] sharedTestsPath
@@ -62,8 +60,7 @@ Target.create "RunTests" (fun _ ->
         "server", dotnet [ "watch"; "run" ] serverTestsPath
         "client", dotnet [ "fable"; "watch"; "-o"; "output"; "-s"; "--run"; "npx"; "vite" ] clientTestsPath
     ]
-    |> runParallel
-)
+    |> runParallel)
 
 Target.create "Format" (fun _ -> run dotnet [ "fantomas"; "." ] ".")
 

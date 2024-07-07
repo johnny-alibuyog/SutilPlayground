@@ -18,14 +18,16 @@ module ElseBlockPage =
         let toggle _ = user |> Store.modify User.toggle
 
         Html.div [
-            Html.div [
-                disposeOnUnmount [ user ]
+            disposeOnUnmount [ user ]
 
-                Bind.el (user .> _.loggedIn, fun loggedIn ->
+            Html.span [ Html.text "Else Block" ]
+
+            Bind.el (user .> _.loggedIn, fun loggedIn ->
+                Html.div [
                     if loggedIn then
                         Html.button [ Ev.onClick toggle; Html.text "Log Out" ]
                     else
                         Html.button [ Ev.onClick toggle; Html.text "Log In" ]
-                )
-            ]
+                ]
+            )
         ]

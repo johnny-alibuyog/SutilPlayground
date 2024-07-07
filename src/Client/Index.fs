@@ -2,38 +2,39 @@ namespace AlphaConnect.Client
 
 module Index =
 
-    open Browser
-    open Components.Button
     open AlphaConnect.Client.Features
+    open Components.Button
+    open Context.Router
+    open Context.Navigator
     open Sutil
     open Sutil.CoreElements
-    open Sutil.Router
+
+    let router: IRouter = RouterEnv()
 
     [<AutoOpen>]
     module Types =
-        type Model = { CurrentPage: Route }
+        type Model = { currentPage: Route }
 
         type Message =
             | Navigate of string
             | SetPage of Route
 
         let init () =
-            let currentPage = window.location |> Router.getCurrentUrl |> Route.ofUrl
+            let currentPage = router.currentUrl () |> Route.ofUrl
 
-            { CurrentPage = currentPage }, Cmd.none
+            { currentPage = currentPage }, Cmd.none
 
     let update (message: Message) (model: Model) : Model * Cmd<Message> =
         match message with
-        | Navigate path -> model, Router.navigate $"/#{path}"
-        | SetPage page -> { model with CurrentPage = page }, Cmd.none
+        | Navigate path -> model, router.redirect $"/#{path}"
+        | SetPage page -> { model with currentPage = page }, Cmd.none
 
     let view () =
         let model, dispatch = () |> Store.makeElmish init update ignore
 
-        let navigationSubscription =
-            Navigable.listenLocation (Router.getCurrentUrl, Route.ofUrl >> SetPage >> dispatch)
+        let navigationSubscription = router.subscribe (Route.ofUrl >> SetPage >> dispatch)
 
-        let navigate path = dispatch (Navigate path)
+        let navigator: INavigator = NavigatorEnv (Navigate >> dispatch)
 
         Html.div [
             disposeOnUnmount [ model ]
@@ -60,22 +61,22 @@ module Index =
                             button.variant.link
                             button.size.icon
                             button.text "Home"
-                            button.onClick (fun _ -> navigate "/")
+                            button.onClick (fun _ -> navigator.navigate "/")
                         ]
                         button.render [
                             button.variant.link
                             button.size.icon
                             button.text "Login"
-                            button.onClick (fun _ -> navigate "/login")
+                            button.onClick (fun _ -> navigator.navigate "/login")
                         ]
                         button.render [
                             button.variant.destructive
                             button.size.small
                             button.text "User"
                             button.onClick (fun _ ->
-                                Users.ListPage({ page = 1; size = 10 })
+                                Users.Route.ListPage({ page = 1; size = 10 })
                                 |> Users.Route.asUrl
-                                |> navigate
+                                |> navigator.navigate
                             )
                         ]
                         button.render [
@@ -85,7 +86,7 @@ module Index =
                             button.onClick (fun _ ->
                                 Sandbox.Intro.Route.SamplePage
                                 |> Sandbox.Intro.Route.asUrl
-                                |> navigate
+                                |> navigator.navigate
                             )
                         ]
                     ]
@@ -110,15 +111,13 @@ module Index =
                             "sm:bg-transparent"
                             "sm:px-6"
                         ]
-                        Bind.el (
-                            model .> _.CurrentPage,
-                            fun page ->
-                                match page with
-                                | Route.HomePage -> Home.HomePage.render ()
-                                | Route.LoginPage -> Security.LoginPage.render ()
-                                | Route.UserRoute route -> Users.Layout.view navigate route
-                                | Route.SandboxRoute route -> Sandbox.Layout.view navigate route
-                                | Route.NotFound -> Html.h1 "Not found!"
+                        Bind.el (model .> _.currentPage, fun page ->
+                            match page with
+                            | Route.HomePage -> Home.HomePage.render ()
+                            | Route.LoginPage -> Security.LoginPage.render ()
+                            | Route.UserRoute route -> Users.Layout.view navigator route
+                            | Route.SandboxRoute route -> Sandbox.Layout.view navigator route
+                            | Route.NotFound -> Html.h1 "Not found!"
                         )
                     ]
                 ]

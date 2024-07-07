@@ -4,18 +4,21 @@ type Route =
     | ElmishCounterPage
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
-        | [ "sandbox"; "elm"; "emish-counter" ] -> ElmishCounterPage
+        | [ "emish-counter" ] -> ElmishCounterPage
         | _ -> ElmishCounterPage
 
     let asUrl route =
         match route with
         | ElmishCounterPage -> "/sandbox/elm/emish-counter"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsElm|_|) segments =
+    let (|IsElm|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "elm" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "elm" :: s -> Some(ofUrl s)
         | _ -> None

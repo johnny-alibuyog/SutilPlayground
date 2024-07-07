@@ -3,10 +3,11 @@ namespace AlphaConnect.Client.Features.Sandbox
 module Layout =
     open Sutil
     open AlphaConnect.Client.Components.Button
+    open AlphaConnect.Client.Context.Navigator
 
-    let view navigator (route: Route) =
+    let view (env: #INavigator) (route: Route) =
 
-        let navigate = Route.navigate navigator
+        let navigate = Route.navigate env
 
         Html.div [
 
@@ -65,11 +66,11 @@ module Layout =
             ]
 
             match route with
-            | IntroRoute route' -> Intro.Layout.view navigator route'
+            | IntroRoute route' -> Intro.Layout.view env route'
             | LocalRoute _ -> LocalRoute.Layout.view // TODO: this local route this POC is not yet working
-            | ReactivityRoute route' -> Reactivity.Layout.view navigator route'
-            | LogicRoute route' -> Logic.Layout.view navigator route'
-            | EventsRoute route' -> Events.Layout.view navigator route'
-            | TransitionsRoute route' -> Transitions.Layout.view navigator route'
-            | ElmRoute route' -> Elm.Layout.view navigator route'
+            | ReactivityRoute route' -> Reactivity.Layout.view env route'
+            | LogicRoute route' -> Logic.Layout.view env route'
+            | EventsRoute route' -> Events.Layout.view env route'
+            | TransitionsRoute route' -> Transitions.Layout.view env route'
+            | ElmRoute route' -> Elm.Layout.view env route'
         ]

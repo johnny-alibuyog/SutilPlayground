@@ -20,6 +20,8 @@ module IfBlockPage =
         Html.div [
             disposeOnUnmount [ user ]
 
+            Html.span [ Html.text "If Block" ]
+
             Bind.el (user .> _.loggedIn, fun loggedIn ->
                 Html.div [
                     if loggedIn then

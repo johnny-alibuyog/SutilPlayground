@@ -9,9 +9,13 @@ type Route =
     | TransitionsRoute of Transitions.Route
     | ElmRoute of Elm.Route
 
-
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let segment = "sandbox"
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
         | Intro.Route.IsIntro route -> IntroRoute route
         | LocalRoute.Route.IsLocalRoute route -> LocalRoute route
@@ -32,9 +36,9 @@ module Route =
         | TransitionsRoute page -> Transitions.Route.asUrl page
         | ElmRoute page -> Elm.Route.asUrl page
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsSandbox|_|) segments =
+    let (|IsSandbox|_|)  (segments: UrlSegments) =
         match segments with
         | "sandbox" :: _ -> Some(ofUrl segments)
         | _ -> None

@@ -6,11 +6,14 @@ type Route =
     | ElseIfBlockPage
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
-        | [ "sandbox"; "logic"; "if-block" ] -> IfBlockPage
-        | [ "sandbox"; "logic"; "else-block" ] -> ElseBlockPage
-        | [ "sandbox"; "logic"; "else-if-block" ] -> ElseIfBlockPage
+        | [ "if-block" ] -> IfBlockPage
+        | [ "else-block" ] -> ElseBlockPage
+        | [ "else-if-block" ] -> ElseIfBlockPage
         | _ -> IfBlockPage
 
     let asUrl route =
@@ -19,9 +22,9 @@ module Route =
         | ElseBlockPage -> "/sandbox/logic/else-block"
         | ElseIfBlockPage -> "/sandbox/logic/else-if-block"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsLogic|_|) segments =
+    let (|IsLogic|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "logic" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "logic" :: s -> Some(ofUrl s)
         | _ -> None

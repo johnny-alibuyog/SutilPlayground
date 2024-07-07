@@ -7,7 +7,7 @@ module TransitionWithParametersPage =
 
     let view () =
         let visible = Store.make true
-        let status  = Store.make "Waiting..."
+        let status = Store.make "Waiting..."
 
         Html.div [
             disposeOnUnmount [ visible; status ]
@@ -32,5 +32,5 @@ module TransitionWithParametersPage =
                 on "outroend" (fun _ -> status <~ "outro ended") []
                 Html.text "Fades in and out"
             ]
-            |> transition [ InOut (fly |> withProps [ Duration 2000.0; Y 200.0 ]) ] visible
+            |> transition [ InOut(fly |> withProps [ Duration 2000.0; Y 200.0 ]) ] visible
         ]

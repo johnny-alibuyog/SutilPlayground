@@ -20,4 +20,3 @@ module ListPage =
                 Html.text $"Page: {page}, Size: {size}"
             ]
         ]
-

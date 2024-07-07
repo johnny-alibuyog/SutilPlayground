@@ -4,18 +4,21 @@ type Route =
     | EventModifiersPage
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
-        | [ "sandbox"; "events"; "event-modifiers" ] -> EventModifiersPage
+        | [ "event-modifiers" ] -> EventModifiersPage
         | _ -> EventModifiersPage
 
     let asUrl route =
         match route with
         | EventModifiersPage -> "/sandbox/events/event-modifiers"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsEvents|_|) segments =
+    let (|IsEvents|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "events" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "events" :: s -> Some(ofUrl s)
         | _ -> None

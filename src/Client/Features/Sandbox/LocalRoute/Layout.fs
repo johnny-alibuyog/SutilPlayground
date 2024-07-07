@@ -14,13 +14,12 @@ module Layout =
             | Page2
 
         module Page =
-            let query = function
+            let query =
+                function
                 | Page1 -> "page=page1"
                 | Page2 -> "page=page2"
 
-        type Model = {
-            page: Page
-        }
+        type Model = { page: Page }
 
         module Model =
             let init () = { page = Page1 }, Cmd.none

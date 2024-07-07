@@ -1,16 +1,18 @@
 namespace AlphaConnect.Client.Features.Sandbox.LocalRoute
 
-open Sutil.Router
-
 type Route =
     | Page1
     | Page2
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open Sutil.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
-        | [ "sandbox"; "local-route"; Route.Query [ "page", "page1" ] ] -> Page1
-        | [ "sandbox"; "local-route"; Route.Query [ "page", "Page2" ] ] -> Page2
+        | [ Route.Query [ "page", "page1" ] ] -> Page1
+        | [ Route.Query [ "page", "Page2" ] ] -> Page2
         | _ -> Page1
 
     let asUrl route =
@@ -18,9 +20,9 @@ module Route =
         | Page1 -> "/sandbox/local-route/page=page1"
         | Page2 -> "/sandbox/local-route/page=page2"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsLocalRoute|_|) segments =
+    let (|IsLocalRoute|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "local-route" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "local-route" :: s -> Some(ofUrl s)
         | _ -> None

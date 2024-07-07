@@ -15,8 +15,10 @@ module HomePage =
             somethingElse: int
         }
 
-        let init () =
-            { something = "something"; somethingElse = 0 }
+        let init () = {
+            something = "something"
+            somethingElse = 0
+        }
 
 
     let update (model: Model) (message: Messsage) =
@@ -24,7 +26,7 @@ module HomePage =
         | DoSomething something ->
             { model with something = something }, Cmd.none
         | DoSomethingElse somethingElse ->
-            { model with somethingElse = somethingElse  }, Cmd.none
+            { model with somethingElse = somethingElse }, Cmd.none
 
     let render () =
         Html.h1 [

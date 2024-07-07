@@ -10,8 +10,9 @@ type Route =
     | NotFound
 
 module Route =
+    open AlphaConnect.Client.Context.Router
 
-    let ofUrl (segments: string list) =
+    let ofUrl (segments: UrlSegments) =
         match segments with
         | [] -> HomePage
         | Users.Route.IsUser route -> UserRoute route

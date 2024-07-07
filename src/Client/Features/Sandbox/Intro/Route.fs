@@ -9,14 +9,18 @@ type Route =
     | HtmlTagsPage
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
+        Browser.Dom.console.log segments
         match segments with
-        | [ "sandbox"; "intro"; "hello-world" ] -> HelloWorldPage
-        | [ "sandbox"; "intro"; "sample" ] -> SamplePage
-        | [ "sandbox"; "intro"; "dynamic-attribute" ] -> DynamicAttributePage
-        | [ "sandbox"; "intro"; "styling" ] -> StylingPage
-        | [ "sandbox"; "intro"; "nested-component" ] -> NestedComponentPage
-        | [ "sandbox"; "intro"; "html-tags" ] -> HtmlTagsPage
+        | [ "hello-world" ] -> HelloWorldPage
+        | [ "sample" ] -> SamplePage
+        | [ "dynamic-attribute" ] -> DynamicAttributePage
+        | [ "styling" ] -> StylingPage
+        | [ "nested-component" ] -> NestedComponentPage
+        | [ "html-tags" ] -> HtmlTagsPage
         | _ -> SamplePage
 
     let asUrl route =
@@ -28,9 +32,9 @@ module Route =
         | NestedComponentPage -> "/sandbox/intro/nested-component"
         | HtmlTagsPage -> "/sandbox/intro/html-tags"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsIntro|_|) segments =
+    let (|IsIntro|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "intro" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "intro" :: s -> Some(ofUrl s)
         | _ -> None

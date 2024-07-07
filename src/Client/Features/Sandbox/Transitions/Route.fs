@@ -6,11 +6,14 @@ type Route =
     | AnimationPage
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
-        | [ "sandbox"; "transitions"; "transition" ] -> TransitionPage
-        | [ "sandbox"; "transitions"; "transition-with-parameters" ] -> TransitionWithParametersPage
-        | [ "sandbox"; "transitions"; "animation" ] -> AnimationPage
+        | [ "transition" ] -> TransitionPage
+        | [ "transition-with-parameters" ] -> TransitionWithParametersPage
+        | [ "animation" ] -> AnimationPage
         | _ -> TransitionPage
 
     let asUrl route =
@@ -19,9 +22,9 @@ module Route =
         | TransitionWithParametersPage -> "/sandbox/transitions/transition-with-parameters"
         | AnimationPage -> "/sandbox/transitions/animation"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsTransitions|_|) segments =
+    let (|IsTransitions|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "transitions" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "transitions" :: s -> Some(ofUrl s)
         | _ -> None

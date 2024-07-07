@@ -2,29 +2,33 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "paket": {
-      "version": "8.0.0",
-      "commands": [
-        "paket"
-      ]
-    },
     "fable": {
       "version": "4.9.0",
       "commands": [
         "fable"
-      ]
+      ],
+      "rollForward": false
     },
     "femto": {
       "version": "0.18.0",
       "commands": [
         "femto"
-      ]
+      ],
+      "rollForward": false
     },
     "fantomas": {
       "version": "6.2.3",
       "commands": [
         "fantomas"
-      ]
+      ],
+      "rollForward": false
+    },
+    "paket": {
+      "version": "8.0.3",
+      "commands": [
+        "paket"
+      ],
+      "rollForward": false
     }
   }
 }

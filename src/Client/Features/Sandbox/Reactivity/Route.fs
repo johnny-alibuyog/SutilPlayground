@@ -6,11 +6,14 @@ type Route =
     | ReactiveStatementPage
 
 module Route =
-    let ofUrl segments =
+    open AlphaConnect.Client.Context.Router
+    open AlphaConnect.Client.Context.Navigator
+
+    let ofUrl (segments: UrlSegments) =
         match segments with
-        | [ "sandbox"; "reactivity"; "reactive-assignments" ] -> ReactiveAssignmentPage
-        | [ "sandbox"; "reactivity"; "reactive-declarations" ] -> ReactiveDeclarationPage
-        | [ "sandbox"; "reactivity"; "reactive-statements" ] -> ReactiveStatementPage
+        | [ "reactive-assignments" ] -> ReactiveAssignmentPage
+        | [ "reactive-declarations" ] -> ReactiveDeclarationPage
+        | [ "reactive-statements" ] -> ReactiveStatementPage
         | _ -> ReactiveAssignmentPage
 
     let asUrl route =
@@ -19,9 +22,9 @@ module Route =
         | ReactiveDeclarationPage -> "/sandbox/reactivity/reactive-declarations"
         | ReactiveStatementPage -> "/sandbox/reactivity/reactive-statements"
 
-    let navigate navigate route = route |> asUrl |> navigate
+    let navigate (env: #INavigator) route = route |> asUrl |> env.navigate
 
-    let (|IsReactivity|_|) segments =
+    let (|IsReactivity|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "reactivity" :: _ -> Some(ofUrl segments)
+        | "sandbox" :: "reactivity" :: s -> Some(ofUrl s)
         | _ -> None
