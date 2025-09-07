@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "scripts": {
+        "test": "dotnet fable --define HEADLESS --run web-test-runner *\\*Test.fs.js --node-resolve",
+        "test:watch":  "dotnet fable watch --define HEADLESS --run web-test-runner *\\*Test.fs.js --node-resolve --watch"
+    },
+    "devDependencies": {
+        "@web/test-runner": "^0.13.18",
+        "@web/test-runner-commands": "^0.5.13",
+        "aria-query": "^5.0.0",
+        "dom-accessibility-api": "^0.5.7",
+        "esbuild": "^0.13.4"
+    }
+}

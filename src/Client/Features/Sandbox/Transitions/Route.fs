@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Transitions
+namespace SutilPlayground.Client.Features.Sandbox.Transitions
 
 type Route =
     | TransitionPage
@@ -6,8 +6,7 @@ type Route =
     | AnimationPage
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
         match segments with

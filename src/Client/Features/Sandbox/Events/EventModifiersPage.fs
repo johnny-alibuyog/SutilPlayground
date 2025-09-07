@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Events
+namespace SutilPlayground.Client.Features.Sandbox.Events
 
 module EventModifiersPage =
     open Sutil

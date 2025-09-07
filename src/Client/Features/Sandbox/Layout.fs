@@ -1,9 +1,9 @@
-namespace AlphaConnect.Client.Features.Sandbox
+namespace SutilPlayground.Client.Features.Sandbox
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 
@@ -16,53 +16,53 @@ module Layout =
                 Html.text "Sandbox"
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Intro"
-                button.onClick (fun _ -> navigate (IntroRoute Intro.SamplePage))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Intro"
+                Button.onClick (fun _ -> navigate (IntroRoute Intro.SamplePage))
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Local Route"
-                button.onClick (fun _ -> navigate (LocalRoute LocalRoute.Page1))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Local Route"
+                Button.onClick (fun _ -> navigate (LocalRoute LocalRoute.Page1))
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Reactivity"
-                button.onClick (fun _ -> navigate (ReactivityRoute Reactivity.ReactiveAssignmentPage))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Reactivity"
+                Button.onClick (fun _ -> navigate (ReactivityRoute Reactivity.ReactiveAssignmentPage))
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Logic"
-                button.onClick (fun _ -> navigate (LogicRoute Logic.IfBlockPage))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Logic"
+                Button.onClick (fun _ -> navigate (LogicRoute Logic.IfBlockPage))
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Events"
-                button.onClick (fun _ -> navigate (EventsRoute Events.EventModifiersPage))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Events"
+                Button.onClick (fun _ -> navigate (EventsRoute Events.EventModifiersPage))
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Transitions"
-                button.onClick (fun _ -> navigate (TransitionsRoute Transitions.TransitionPage))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Transitions"
+                Button.onClick (fun _ -> navigate (TransitionsRoute Transitions.TransitionPage))
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Elm"
-                button.onClick (fun _ -> navigate (ElmRoute Elm.ElmishCounterPage))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Elm"
+                Button.onClick (fun _ -> navigate (ElmRoute Elm.ElmishCounterPage))
             ]
 
             match route with

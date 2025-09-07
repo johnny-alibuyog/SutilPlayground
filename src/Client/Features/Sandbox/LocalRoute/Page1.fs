@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.LocalRoute
+namespace SutilPlayground.Client.Features.Sandbox.LocalRoute
 
 module Page1 =
     open Sutil

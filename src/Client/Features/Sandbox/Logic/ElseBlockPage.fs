@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Logic
+namespace SutilPlayground.Client.Features.Sandbox.Logic
 
 module ElseBlockPage =
     open Sutil

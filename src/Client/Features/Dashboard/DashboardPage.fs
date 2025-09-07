@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Dashboard
+namespace SutilPlayground.Client.Features.Dashboard
 
 module DashboardPage =
 

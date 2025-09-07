@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Users
+namespace SutilPlayground.Client.Features.Users
 
 module ListPage =
 

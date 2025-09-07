@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Security
+namespace SutilPlayground.Client.Features.Security
 
 module LoginPage =
 

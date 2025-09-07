@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Home
+namespace SutilPlayground.Client.Features.Home
 
 module HomePage =
 

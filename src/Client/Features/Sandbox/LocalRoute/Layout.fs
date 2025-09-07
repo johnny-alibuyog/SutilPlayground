@@ -1,10 +1,8 @@
-namespace AlphaConnect.Client.Features.Sandbox.LocalRoute
+namespace SutilPlayground.Client.Features.Sandbox.LocalRoute
 
 module Layout =
-    open Browser.Dom
-    open Fable.Core.JS
     open Sutil
-    open AlphaConnect.Client.Components.Button
+    open SutilPlayground.Client.Components.Button
 
     [<AutoOpen>]
     module Types =
@@ -43,14 +41,14 @@ module Layout =
                 Attr.text "Local Route Sandbox"
             ]
 
-            button.default' [
-                button.text "Page 1"
-                button.onClick (fun _ -> dispatch (SetPage Page1))
+            Button.create [
+                Button.text "Page 1"
+                Button.onClick (fun _ -> dispatch (SetPage Page1))
             ]
 
-            button.default' [
-                button.text "Page 2"
-                button.onClick (fun _ -> dispatch (SetPage Page2))
+            Button.create [
+                Button.text "Page 2"
+                Button.onClick (fun _ -> dispatch (SetPage Page2))
             ]
 
             Bind.el (model, (fun m ->

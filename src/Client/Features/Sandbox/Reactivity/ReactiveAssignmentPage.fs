@@ -1,8 +1,8 @@
-namespace AlphaConnect.Client.Features.Sandbox.Reactivity
+namespace SutilPlayground.Client.Features.Sandbox.Reactivity
 
 module ReactiveAssignmentPage =
 
-    open AlphaConnect.Client.Components.Button
+    open SutilPlayground.Client.Components.Button
     open Sutil
     open Sutil.CoreElements
 
@@ -19,13 +19,13 @@ module ReactiveAssignmentPage =
 
             Html.div [
                 Attr.classes [ "block" ]
-                button.default' [
-                    button.onClick (fun _ -> count <~= (fun c -> c + 1))
-                    button.text "+"
+                Button.create [
+                    Button.onClick (fun _ -> count <~= (fun c -> c + 1))
+                    Button.text "+"
                 ]
-                button.default' [
-                    button.onClick (fun _ -> count <~= (fun c -> c - 1))
-                    button.text "-"
+                Button.create [
+                    Button.onClick (fun _ -> count <~= (fun c -> c - 1))
+                    Button.text "-"
                 ]
             ]
         ]

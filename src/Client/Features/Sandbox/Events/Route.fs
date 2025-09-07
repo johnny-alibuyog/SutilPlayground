@@ -1,11 +1,10 @@
-namespace AlphaConnect.Client.Features.Sandbox.Events
+namespace SutilPlayground.Client.Features.Sandbox.Events
 
 type Route =
     | EventModifiersPage
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
         match segments with

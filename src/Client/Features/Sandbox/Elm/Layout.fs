@@ -1,9 +1,9 @@
-namespace AlphaConnect.Client.Features.Sandbox.Elm
+namespace SutilPlayground.Client.Features.Sandbox.Elm
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button1
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 

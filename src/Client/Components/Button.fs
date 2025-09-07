@@ -1,76 +1,83 @@
-namespace AlphaConnect.Client.Components
+namespace SutilPlayground.Client.Components
 
 module Button =
 
     open Sutil
-    open Sutil.Core
 
-    type ButtonAttribute =
-        | Variant of string list
-        | Size of string list
+    type Classes = string list
+
+    type Attribute =
+        | Variant of Classes
+        | Size of Classes
         | Text of string
         | OnClick of (unit -> unit)
+        | Disabled of bool
 
-    type ButtonProperty = {
-        classes: string list
-        elements: SutilElement list
+    type Property = {
+        variant: Classes
+        size: Classes
+        text: string
+        onClick: unit -> unit
+        disabled: bool
     }
 
-    type ButtonVariantEngine() =
-        member inline this.default' =
-            Variant [ "bg-primary"; "text-primary-foreground"; "hover:bg-primary/90" ]
+    type VariantEngine() =
+        member inline _.default' = Variant [ "bg-primary"; "text-primary-foreground"; "hover:bg-primary/90" ]
 
-        member inline this.destructive =
-            Variant [ "bg-destructive"; "text-destructive-foreground"; "hover:bg-destructive/90" ]
+        member inline _.destructive = Variant [ "bg-destructive"; "text-destructive-foreground"; "hover:bg-destructive/90" ]
 
-        member inline this.outline =
-            Variant [
-                "border"
-                "border-input"
-                "bg-background"
-                "hover:bg-accent"
-                "hover:text-accent-foreground"
-            ]
+        member inline _.outline = Variant [ "border"; "border-input"; "bg-background"; "hover:bg-accent"; "hover:text-accent-foreground" ]
 
-        member inline this.secondary =
-            Variant [ "bg-secondary"; "text-secondary-foreground"; "hover:bg-secondary/80" ]
+        member inline _.secondary = Variant [ "bg-secondary"; "text-secondary-foreground"; "hover:bg-secondary/80" ]
 
-        member inline this.ghost =
-            Variant [ "hover:bg-accent"; "hover:text-accent-foreground" ]
+        member inline _.ghost = Variant [ "hover:bg-accent"; "hover:text-accent-foreground" ]
 
-        member inline this.link =
-            Variant [ "text-primary"; "underline-offset-4"; "hover:underline" ]
+        member inline _.link = Variant [ "text-primary"; "underline-offset-4"; "hover:underline" ]
 
-    type ButtonSizeEngine() =
-        member inline this.default' = Size [ "h-10"; "px-4"; "py-2" ]
+        member inline _.unwrap attribute =
+            match attribute with
+            | Variant classes -> classes
+            | _ -> []
 
-        member inline this.small = Size [ "h-9"; "rounded-md"; "px-3" ]
+    type SizeEngine() =
+        member inline _.default' = Size [ "h-10"; "px-4"; "py-2" ]
 
-        member inline this.large = Size [ "h-11"; "rounded-md"; "px-8" ]
+        member inline _.small = Size [ "h-9"; "rounded-md"; "px-3" ]
 
-        member inline this.icon = Size [ "h-10"; "w-10" ]
+        member inline _.large = Size [ "h-11"; "rounded-md"; "px-8" ]
 
-    module ButtonProperty =
-        let private withAttribute (prop: ButtonProperty) (attr: ButtonAttribute) =
+        member inline _.icon = Size [ "h-10"; "w-10" ]
+
+        member inline _.unwrap attribute =
+            match attribute with
+            | Size classes -> classes
+            | _ -> []
+
+    module Property =
+        let inline withAttribute (prop: Property) (attr: Attribute) =
             match attr with
-            | Variant variant -> {
-                prop with
-                    classes = prop.classes @ variant
-              }
-            | Size size -> {
-                prop with
-                    classes = prop.classes @ size
-              }
-            | Text text -> {
-                prop with
-                    elements = prop.elements @ [ Html.text text ]
-              }
-            | OnClick event -> {
-                prop with
-                    elements = prop.elements @ [ Ev.onClick (fun _ -> event ()) ]
-              }
+            | Variant variant ->
+                { prop with variant = variant }
+            | Size size ->
+                { prop with size = size }
+            | Text text ->
+                { prop with text = text }
+            | OnClick onClick ->
+                { prop with onClick = onClick}
+            | Disabled disabled ->
+                { prop with disabled = disabled }
 
-        let private baseClasses = [
+        let inline create (variant: VariantEngine) (size: SizeEngine) =
+            {
+                variant = variant.unwrap variant.default'
+                size =  size.unwrap size.default'
+                text = ""
+                onClick = ignore
+                disabled = false
+            }
+
+    type ButtonEngine() =
+        member inline private this.baseClasses = [
             "inline-flex"
             "items-center"
             "justify-center"
@@ -87,30 +94,25 @@ module Button =
             "disabled:pointer-events-none"
             "disabled:opacity-50"
         ]
+        member inline this.variant = VariantEngine()
 
-        let ofAttributes (attributes: ButtonAttribute list) =
-            attributes |> List.fold withAttribute { classes = baseClasses; elements = [] }
-
-        let asElements (property: ButtonProperty) =
-            [ Attr.classes property.classes ] @ property.elements
-
-    type ButtonEngine() =
-        member inline this.variant = ButtonVariantEngine()
-
-        member inline this.size = ButtonSizeEngine()
+        member inline this.size = SizeEngine()
 
         member inline this.text t = Text t
 
         member inline this.onClick e = OnClick e
 
-        member inline this.render attributes =
-            ButtonProperty.ofAttributes attributes
-            |> ButtonProperty.asElements
-            |> Html.button
+        member inline this.disabled d = Disabled d
 
-        member inline this.default' attrs =
-            this.render ([ this.variant.default'; this.size.default' ] @ attrs)
+        member inline this.create attrs =
+            let prop = attrs |> List.fold Property.withAttribute (Property.create this.variant this.size)
 
-    [<AutoOpen>]
-    module EngineContainer =
-        let button = ButtonEngine()
+            Html.button [
+                Attr.classes (names = this.baseClasses @ prop.variant @ prop.size)
+                Attr.text (s = prop.text)
+                Ev.onClick (handler = fun _ -> prop.onClick())
+                Attr.disabled (value = prop.disabled)
+            ]
+
+    let Button = ButtonEngine()
+

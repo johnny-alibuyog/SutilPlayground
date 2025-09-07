@@ -57,8 +57,17 @@ Target.create "RunTests" (fun _ ->
     run dotnet [ "build" ] sharedTestsPath
 
     [
-        "server", dotnet [ "watch"; "run" ] serverTestsPath
-        "client", dotnet [ "fable"; "watch"; "-o"; "output"; "-s"; "--run"; "npx"; "vite" ] clientTestsPath
+        // "server", dotnet [ "watch"; "run" ] serverTestsPath
+        // "client", dotnet [ "fable"; "watch"; "-o"; "output"; "-s"; "--run"; "npx"; "vite" ] clientTestsPath
+
+        // "client", dotnet [ "fable"; "watch"; "-o"; "output"; "-s"; "--run"; "npx"; "vite" ] clientTestsPath
+        // "client", dotnet [ "fable"; "."; "--define"; "HEADLESS"; "--run"; "web-test-runner"; "*\\*Test.fs.js"; "--node-resolve"; ] clientTestsPath
+        // "client", dotnet [ "fable"; "-o"; "output"; "--define"; "HEADLESS"; "--run"; "web-test-runner"; "*/*Test.fs.js"; "--node-resolve" ] clientTestsPath
+        // "client", dotnet [ "fable"; "watch"; "."; "--define"; "HEADLESS"; "--run"; "web-test-runner"; "*\\*Test.fs.js"; "--node-resolve"; "--watch" ] clientTestsPath
+
+        // "client", dotnet [ "fable"; "Client"; "--define"; "HEADLESS"; "--run"; "web-test-runner"; "*\\*Test.fs.js"; "--node-resolve" ] clientTestsPath
+        // "client", dotnet [ "fable"; "Client"; "--define"; "HEADLESS"; "--run"; "web-test-runner"; "*\\*Test.fs.js"; "--node-resolve" ] clientTestsPath
+        "client", dotnet [ "fable"; "Client"; "-o"; "output"; "--define"; "HEADLESS"; "--run"; "web-test-runner"; "*\\*Test.fs.js"; "--node-resolve"; ] clientTestsPath
     ]
     |> runParallel)
 

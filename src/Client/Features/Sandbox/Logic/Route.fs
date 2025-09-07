@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Logic
+namespace SutilPlayground.Client.Features.Sandbox.Logic
 
 type Route =
     | IfBlockPage
@@ -6,8 +6,7 @@ type Route =
     | ElseIfBlockPage
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
         match segments with

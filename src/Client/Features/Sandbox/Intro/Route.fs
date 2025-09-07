@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Intro
+namespace SutilPlayground.Client.Features.Sandbox.Intro
 
 type Route =
     | HelloWorldPage
@@ -9,11 +9,9 @@ type Route =
     | HtmlTagsPage
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
-        Browser.Dom.console.log segments
         match segments with
         | [ "hello-world" ] -> HelloWorldPage
         | [ "sample" ] -> SamplePage
@@ -36,5 +34,7 @@ module Route =
 
     let (|IsIntro|_|) (segments: UrlSegments) =
         match segments with
-        | "sandbox" :: "intro" :: s -> Some(ofUrl s)
+        | "sandbox" :: "intro" :: s ->
+            let parent = segments |> List.except s
+            Some(ofUrl s)
         | _ -> None

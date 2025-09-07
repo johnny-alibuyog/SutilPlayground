@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client
+namespace SutilPlayground.Client
 
 module App =
 

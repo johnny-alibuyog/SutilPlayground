@@ -1,11 +1,10 @@
-namespace AlphaConnect.Client.Features.Sandbox.Elm
+namespace SutilPlayground.Client.Features.Sandbox.Elm
 
 type Route =
     | ElmishCounterPage
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
         match segments with

@@ -1,10 +1,10 @@
-namespace AlphaConnect.Client.Features.Sandbox.Intro
+namespace SutilPlayground.Client.Features.Sandbox.Intro
 
 module SamplePage =
 
     open Sutil
     open Sutil.CoreElements
-    open AlphaConnect.Client.Components.Button
+    open SutilPlayground.Client.Components.Button
 
     [<AutoOpen>]
     module Types =
@@ -47,14 +47,14 @@ module SamplePage =
             Bind.el (model |> Store.map _.counter, (fun counter -> Html.text $"Counter: {counter}"))
 
             Html.div [
-                button.default' [
-                    button.text "+"
-                    button.onClick (fun _ -> dispatch Increment)
+                Button.create [
+                    Button.text "+"
+                    Button.onClick (fun _ -> dispatch Increment)
                 ]
 
-                button.default' [
-                    button.text "-"
-                    button.onClick (fun _ -> dispatch Decrement)
+                Button.create [
+                    Button.text "-"
+                    Button.onClick (fun _ -> dispatch Decrement)
                 ]
             ]
         ]

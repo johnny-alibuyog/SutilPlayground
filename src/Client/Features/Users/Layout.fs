@@ -1,33 +1,33 @@
-namespace AlphaConnect.Client.Features.Users
+namespace SutilPlayground.Client.Features.Users
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 
         let navigate = Route.navigate env
 
         Html.div [
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "User List"
-                button.onClick (fun _ -> navigate (ListPage { page = 1; size = 10 }))
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "User List"
+                Button.onClick (fun _ -> navigate (ListPage { page = 1; size = 10 }))
             ]
 
-            button.render [
-                button.variant.outline
-                button.size.default'
-                button.text "User Profile"
-                button.onClick (fun _ -> navigate (ProfilePage { userId = 1 }))
+            Button.create [
+                Button.variant.outline
+                Button.size.default'
+                Button.text "User Profile"
+                Button.onClick (fun _ -> navigate (ProfilePage { userId = 1 }))
             ]
 
-            button.render [
-                button.variant.link
-                button.text "User List"
-                button.onClick (fun _ -> navigate (ListPage { page = 1; size = 10 }))
+            Button.create [
+                Button.variant.link
+                Button.text "User List"
+                Button.onClick (fun _ -> navigate (ListPage { page = 1; size = 10 }))
             ]
 
             match route with

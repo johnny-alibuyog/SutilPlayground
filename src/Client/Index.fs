@@ -1,15 +1,14 @@
-namespace AlphaConnect.Client
+namespace SutilPlayground.Client
 
 module Index =
 
-    open AlphaConnect.Client.Features
+    open SutilPlayground.Client.Features
     open Components.Button
-    open Context.Router
-    open Context.Navigator
+    open Components.Button1
+    open Env.Navigation
     open Sutil
     open Sutil.CoreElements
-
-    let router: IRouter = RouterEnv()
+    open Sutil.Router
 
     [<AutoOpen>]
     module Types =
@@ -20,21 +19,24 @@ module Index =
             | SetPage of Route
 
         let init () =
-            let currentPage = router.currentUrl () |> Route.ofUrl
+            let currentPage =
+                Browser.Dom.window.location
+                |> Router.getCurrentUrl
+                |> Route.ofUrl
 
             { currentPage = currentPage }, Cmd.none
 
     let update (message: Message) (model: Model) : Model * Cmd<Message> =
         match message with
-        | Navigate path -> model, router.redirect $"/#{path}"
+        | Navigate path -> model, Router.navigate $"/#{path}"
         | SetPage page -> { model with currentPage = page }, Cmd.none
 
     let view () =
         let model, dispatch = () |> Store.makeElmish init update ignore
 
-        let navigationSubscription = router.subscribe (Route.ofUrl >> SetPage >> dispatch)
+        let navigationSubscription =  Navigable.listenLocation (Router.getCurrentUrl,Route.ofUrl >> SetPage >> dispatch)
 
-        let navigator: INavigator = NavigatorEnv (Navigate >> dispatch)
+        let navigator: INavigator = Navigator (Navigate >> dispatch)
 
         Html.div [
             disposeOnUnmount [ model ]
@@ -57,31 +59,31 @@ module Index =
                     ]
                     Html.nav [
                         Attr.classes [ "flex"; "flex-col"; "items-center"; "gap-4"; "px-2"; "sm:py-5" ]
-                        button.render [
-                            button.variant.link
-                            button.size.icon
-                            button.text "Home"
-                            button.onClick (fun _ -> navigator.navigate "/")
+                        Button.create [
+                            Button.variant.link
+                            Button.size.icon
+                            Button.text "Home"
+                            Button.onClick (fun _ -> navigator.navigate "/")
                         ]
-                        button.render [
-                            button.variant.link
-                            button.size.icon
-                            button.text "Login"
-                            button.onClick (fun _ -> navigator.navigate "/login")
+                        Button.create [
+                            Button.variant.link
+                            Button.size.icon
+                            Button.text "Login"
+                            Button.onClick (fun _ -> navigator.navigate "/login")
                         ]
-                        button.render [
-                            button.variant.destructive
-                            button.size.small
-                            button.text "User"
-                            button.onClick (fun _ ->
-                                Users.Route.ListPage({ page = 1; size = 10 })
+                        Button.create [
+                            Button.variant.destructive
+                            Button.size.small
+                            Button.text "User"
+                            Button.onClick (fun _ ->
+                                Users.Route.ListPage { page = 1; size = 10 }
                                 |> Users.Route.asUrl
                                 |> navigator.navigate
                             )
                         ]
                         button.render [
-                            button.variant.destructive
-                            button.size.small
+                            button.variant.ghost
+                            button.size.large
                             button.text "SndBx"
                             button.onClick (fun _ ->
                                 Sandbox.Intro.Route.SamplePage

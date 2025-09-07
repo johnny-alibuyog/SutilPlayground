@@ -1,9 +1,9 @@
-namespace AlphaConnect.Client.Features.Sandbox.Logic
+namespace SutilPlayground.Client.Features.Sandbox.Logic
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 
@@ -16,25 +16,25 @@ module Layout =
                 Html.text "Logic"
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "If Block"
-                button.onClick (fun _ -> navigate IfBlockPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "If Block"
+                Button.onClick (fun _ -> navigate IfBlockPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Else Block"
-                button.onClick (fun _ -> navigate ElseBlockPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Else Block"
+                Button.onClick (fun _ -> navigate ElseBlockPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Else If Block"
-                button.onClick (fun _ -> navigate ElseIfBlockPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Else If Block"
+                Button.onClick (fun _ -> navigate ElseIfBlockPage)
             ]
 
             match route with

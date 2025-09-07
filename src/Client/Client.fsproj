@@ -5,13 +5,15 @@
     <DefineConstants>FABLE_COMPILER</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Context.fs" />
+    <Compile Include="Env.fs" />
+    <Compile Include="Dep.fs" />
     <Compile Include="Resources.fs" />
     <None Include="postcss.config.js" />
     <None Include="tailwind.config.js" />
     <None Include="index.html" />
     <None Include="paket.references" />
     <Compile Include="Components\Button.fs" />
+    <Compile Include="Components\Button1.fs" />
     <Compile Include="Features\Dashboard\DashboardPage.fs" />
     <Compile Include="Features\Home\HomePage.fs" />
     <Compile Include="Features\Users\ListPage.fs" />

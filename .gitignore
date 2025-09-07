@@ -14,6 +14,7 @@ packages/
 .paket/
 paket-files/
 node_modules/
+fable_modules/
 release.cmd
 release.sh
 *.orig

@@ -1,13 +1,12 @@
-namespace AlphaConnect.Client.Features.Sandbox.LocalRoute
+namespace SutilPlayground.Client.Features.Sandbox.LocalRoute
 
 type Route =
     | Page1
     | Page2
 
 module Route =
-    open AlphaConnect.Client.Context.Router
+    open SutilPlayground.Client.Env.Navigation
     open Sutil.Router
-    open AlphaConnect.Client.Context.Navigator
 
     let ofUrl (segments: UrlSegments) =
         match segments with

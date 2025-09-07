@@ -1,14 +1,14 @@
 namespace SutilPlayground.Client
 
-module Context =
+module Env =
 
-    module Navigator =
+    module Navigation =
         type UrlSegments = string list
 
         type INavigator =
             abstract member navigate: path: string -> unit
 
-        type NavigatorEnv (dispatch) =
+        type Navigator (dispatch) =
             interface INavigator with
                 member _.navigate path = dispatch path
 

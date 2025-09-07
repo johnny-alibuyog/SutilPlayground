@@ -1,9 +1,9 @@
-namespace AlphaConnect.Client.Features.Sandbox.Events
+namespace SutilPlayground.Client.Features.Sandbox.Events
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 
@@ -13,11 +13,11 @@ module Layout =
 
             Html.h1 [ Attr.classes [ "text-4xl"; "font-bold"; "text-primary" ]; Html.text "Events" ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Event Modifiers"
-                button.onClick (fun _ -> navigate EventModifiersPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Event Modifiers"
+                Button.onClick (fun _ -> navigate EventModifiersPage)
             ]
 
             match route with

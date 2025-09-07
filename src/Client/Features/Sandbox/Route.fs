@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox
+namespace SutilPlayground.Client.Features.Sandbox
 
 type Route =
     | IntroRoute of Intro.Route
@@ -10,8 +10,7 @@ type Route =
     | ElmRoute of Elm.Route
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let segment = "sandbox"
 

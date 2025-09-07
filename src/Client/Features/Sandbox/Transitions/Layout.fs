@@ -1,34 +1,34 @@
-namespace AlphaConnect.Client.Features.Sandbox.Transitions
+namespace SutilPlayground.Client.Features.Sandbox.Transitions
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 
         let navigate = Route.navigate env
 
         Html.div [
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Transitions"
-                button.onClick (fun _ -> navigate TransitionPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Transitions"
+                Button.onClick (fun _ -> navigate TransitionPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Transition with Parameters"
-                button.onClick (fun _ -> navigate TransitionWithParametersPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Transition with Parameters"
+                Button.onClick (fun _ -> navigate TransitionWithParametersPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Animation"
-                button.onClick (fun _ -> navigate AnimationPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Animation"
+                Button.onClick (fun _ -> navigate AnimationPage)
             ]
 
             match route with

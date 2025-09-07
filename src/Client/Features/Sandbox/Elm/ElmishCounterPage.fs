@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Elm
+namespace SutilPlayground.Client.Features.Sandbox.Elm
 
 module ElmishCounterPage =
 

@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Intro
+namespace SutilPlayground.Client.Features.Sandbox.Intro
 
 module HelloWorldPage =
     open Sutil

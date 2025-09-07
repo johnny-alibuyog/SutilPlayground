@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Transitions
+namespace SutilPlayground.Client.Features.Sandbox.Transitions
 
 module TransitionWithParametersPage =
     open Sutil

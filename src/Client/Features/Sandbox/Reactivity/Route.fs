@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Reactivity
+namespace SutilPlayground.Client.Features.Sandbox.Reactivity
 
 type Route =
     | ReactiveAssignmentPage
@@ -6,8 +6,7 @@ type Route =
     | ReactiveStatementPage
 
 module Route =
-    open AlphaConnect.Client.Context.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
         match segments with

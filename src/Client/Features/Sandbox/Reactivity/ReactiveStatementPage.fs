@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Sandbox.Reactivity
+namespace SutilPlayground.Client.Features.Sandbox.Reactivity
 
 module ReactiveStatementPage =
     open Sutil

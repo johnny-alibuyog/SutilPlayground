@@ -1,4 +1,4 @@
-namespace AlphaConnect.Client.Features.Users
+namespace SutilPlayground.Client.Features.Users
 
 type Route =
     | ProfilePage of ProfilePage.Parameters
@@ -6,14 +6,14 @@ type Route =
 
 
 module Route =
-    open AlphaConnect.Client.Context.Router
     open Sutil.Router
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Env.Navigation
+
     let ofUrl (segments: UrlSegments) =
         match segments with
         | [ Route.Int userId ] -> ProfilePage({ userId = userId })
-        | [ Route.Query [ "page", Route.Int page; "size", Route.Int size ] ] -> ListPage({ page = page; size = size })
-        | _ -> ListPage({ page = 1; size = 10 })
+        | [ Route.Query [ "page", Route.Int page; "size", Route.Int size ] ] -> ListPage { page = page; size = size }
+        | _ -> ListPage { page = 1; size = 10 }
 
     let asUrl route =
         match route with

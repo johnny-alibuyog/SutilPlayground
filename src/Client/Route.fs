@@ -1,6 +1,6 @@
-namespace AlphaConnect.Client
+namespace SutilPlayground.Client
 
-open AlphaConnect.Client.Features
+open SutilPlayground.Client.Features
 
 type Route =
     | HomePage
@@ -10,7 +10,7 @@ type Route =
     | NotFound
 
 module Route =
-    open AlphaConnect.Client.Context.Router
+    open SutilPlayground.Client.Env.Navigation
 
     let ofUrl (segments: UrlSegments) =
         match segments with

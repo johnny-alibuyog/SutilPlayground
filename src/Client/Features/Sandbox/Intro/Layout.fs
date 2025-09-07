@@ -1,55 +1,55 @@
-namespace AlphaConnect.Client.Features.Sandbox.Intro
+namespace SutilPlayground.Client.Features.Sandbox.Intro
 
 module Layout =
     open Sutil
-    open AlphaConnect.Client.Components.Button
-    open AlphaConnect.Client.Context.Navigator
+    open SutilPlayground.Client.Components.Button
+    open SutilPlayground.Client.Env.Navigation
 
     let view (env: #INavigator) (route: Route) =
 
         let navigate = Route.navigate env
 
         Html.div [
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Hellow World"
-                button.onClick (fun _ -> navigate HelloWorldPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Hellow World"
+                Button.onClick (fun _ -> navigate HelloWorldPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Sample"
-                button.onClick (fun _ -> navigate SamplePage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Sample"
+                Button.onClick (fun _ -> navigate SamplePage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Dynamic Attribute"
-                button.onClick (fun _ -> navigate DynamicAttributePage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Dynamic Attribute"
+                Button.onClick (fun _ -> navigate DynamicAttributePage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Styling"
-                button.onClick (fun _ -> navigate StylingPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Styling"
+                Button.onClick (fun _ -> navigate StylingPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Nested Component"
-                button.onClick (fun _ -> navigate NestedComponentPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Nested Component"
+                Button.onClick (fun _ -> navigate NestedComponentPage)
             ]
 
-            button.render [
-                button.variant.ghost
-                button.size.default'
-                button.text "Html Tags"
-                button.onClick (fun _ -> navigate HtmlTagsPage)
+            Button.create [
+                Button.variant.ghost
+                Button.size.default'
+                Button.text "Html Tags"
+                Button.onClick (fun _ -> navigate HtmlTagsPage)
             ]
 
             match route with
