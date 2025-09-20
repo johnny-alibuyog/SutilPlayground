@@ -2,6 +2,14 @@ source https://api.nuget.org/v3/index.json
 framework: net8.0
 storage: none
 
+nuget Microsoft.AspNetCore.Authentication.JwtBearer 8.0.5
+nuget Microsoft.AspNetCore.WebUtilities 8.0.5
+nuget Microsoft.Net.Http.Headers 8.0.5
+nuget System.Text.Json >= 8.0.5
+nuget System.Text.Encodings.Web 8.0.0
+nuget System.IO.Pipelines 8.0.0
+nuget System.Collections.Immutable 8.0.0
+
 nuget Fable.Expect
 nuget FSharp.Core ~> 8
 nuget Fable.Remoting.Giraffe ~> 5
